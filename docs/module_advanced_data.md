@@ -4,6 +4,17 @@
 
 ### What are relational databases? Explain the theory behind them!
 
+
+
+* Relational Databases are a type of database that organize date into tables.
+* Each table consists of rows and columns, where each column represents a different attribute and
+	each row represents a single record.
+* Relationships between records in different tables are established through keys.
+* There are different types of keys, such as:
+	* Primary Key: A unique identifier for each record in a table.
+	* Foreign Key: A field that creates a relationship by referencing a primary key in another table.
+
+
 ### Why SQL is important these days?
 
 ### All the new GUI tools enable me to click a button to write SQL. Why should I spend time learning to write SQL manually?
