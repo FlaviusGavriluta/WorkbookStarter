@@ -3,23 +3,34 @@
 ## General SQL
 
 ### What are relational databases? Explain the theory behind them!
-
-
-
 * Relational Databases are a type of database that organize date into tables.
-* Each table consists of rows and columns, where each column represents a different attribute and
-	each row represents a single record.
-* Relationships between records in different tables are established through keys.
-* There are different types of keys, such as:
+* Each table consists of rows and columns, where each column represents a different attribute and each row represents a single record.
+* Relational databases use tables to represent entities and the relationships between them, and this relationships are defined through:
 	* Primary Key: A unique identifier for each record in a table.
 	* Foreign Key: A field that creates a relationship by referencing a primary key in another table.
+* Examples of relational databases include MySQL, PostgreSQL, Oracle, SQL Server, etc.
+* To illustrate a relational database, consider a database for a library. You might have two tables: one for books and one for authors.
+  * The "Books" table could look like this:
+  
+	| ID | Title                  | Author_ID |
+	|----|------------------------|-----------|
+	| 1  | "Pride and Prejudice"  | 101       |
+	| 2  | "War and Peace"        | 102       |
+	| 3  | "Crime and Punishment" | 103       | 
 
+   * And the "Authors" table could look like this:
+	
+	| ID  | NAME              |
+	|-----|-------------------|
+	| 101 | Jane Austen       |
+	| 102 | Leo Tolstoy       |
+	| 103 | Fyodor Dostoevsky |
 
-### Why SQL is important these days?
+### Why SQL is important these days?
 
 ### All the new GUI tools enable me to click a button to write SQL. Why should I spend time learning to write SQL manually?
 
-### If SQL is standardized, should you be able to program with SQL on any databases?
+### If SQL is standardized, should you be able to program with SQL on any databases?
 
 ### What makes SQL a nonprocedural language?
 

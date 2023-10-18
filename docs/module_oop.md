@@ -2,9 +2,9 @@
 
 ## System engineering
 
-### What kind of virtualization technologies are you familiar with?
+### What kind of virtualization technologies are you familiar with?
 
-### What level of virtualization implementations are you familiar with?
+### What level of virtualization implementations are you familiar with?
 
 ### What command line text manipulation tools are you familiar with?
 
@@ -14,7 +14,7 @@
 
 ### How would you check the available free disk space on the computer?
 
-### What are hard links and symbolic links?
+### What are hard links and symbolic links?
 
 ### How would you make a service auto-start and machine boot-up
 
@@ -24,7 +24,7 @@
 
 ### What is a MAC address?
 
-### What is the difference between binding to 127.0.0.1 or 0.0.0.0?
+### What is the difference between binding to 127.0.0.1 or 0.0.0.0?
 
 ### What are the Layers of the OSI model?
 
