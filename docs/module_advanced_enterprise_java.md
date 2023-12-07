@@ -7,6 +7,7 @@
     
     The RestController provides JSON responses, while the Controller responds using the name of a View. This View is responsible for rendering the HTML content with Thymeleaf.
 
+
 * SpringBootApplication:
 
     This annotation marks your configuration class and triggers the auto-configuration and the component scanning as well.
