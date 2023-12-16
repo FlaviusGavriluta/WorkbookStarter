@@ -138,33 +138,201 @@ Commonly, a web server is a software application that receives requests from the
 `https://example.com/path?name=Branch&products=[Journeys,Email,Universal%20Ads]`
 `https://example.com/search?q=apple&category=fruit`
 
-**17 What kind of HTTP status codes do you know?**
+****
 
-* [x] Informational responses (100 – 199)
-* [x] Successful responses (200 – 299)
-* [x] Redirection messages (300 – 399)
-* [x] Client error responses (400 – 499)
-* [x] Server error responses (500 – 599)
+### **HTTP (Hypertext Transfer Protocol)**
 
-**18 How does an HTTP Request look like? What are the most relevant HTTP header fields?**
 
-* Here are the most relevant HTTP request components (including headers):
+**17. What is HTTP?**
 
-* [x] request method: `GET`, `POST`, `PUT`, `PATCH`, `DELETE`
-* [x] request URL
-* [x] request headers: `Content-Type`: `application/json`; `User-Agent`; `Accept`; `Authorization`
-* [x] request body
+Reprezinta fundamentul comunicarii de date pentru World Wide Web. 
+Este un protocol sau un set de reguli care dicteaza modul in care mesajele ar trebui sa fie formatate si transmise;
+si de altfel dicteaza ce actiuni ar trebui sa intreprinda web serverele si browserele ca un raspuns la diversele comenzi.
 
-**19 How does an HTTP Response look like? What are the most relevant HTTP header fields?**
+**18. Why is HTTP important?**
 
-* Relevant components (and headers) for HTTP response:
+* **Comunication:**
+  * Faciliteaza comunicarea intre client devices (calculatoare, laptopuri, telefoane, tablete, etc.) si web serververs.
 
-* [x] status code: informational responses (100 – 199); successful responses (200 – 299); redirection messages (300 – 399); client error responses (400 – 499); server error responses (500 – 599);
-* [x] reason phrase (a human-readable explanation for the status code before)
-* [x] response headers: `Content-Type`: `application/json`; `Access-Control-Allow-Origin`; `Access-Control-Request-Method: GET`, `Accept-Language`; `User-Agent`;
-* [x] response body
+* **Standardization:** 
+  * Coerenta: HTTP stabilește reguli clare pentru cum ar trebui să arate cererile și răspunsurile, asigurându-se că fiecare browser și server "vorbește aceeași limbă".
+  * Fiabilitate: HTTP asigură că datele sunt transferate într-un mod fiabil prin utilizarea unor metode specifice (cum ar fi GET, POST) și coduri de statut (de exemplu, 200 pentru succes, 404 pentru 'Not Found'). Acest lucru este similar cu gestionarea excepțiilor în OOP. În Java, de exemplu, folosim blocuri try-catch pentru a gestiona situațiile în care ceva nu merge conform așteptărilor. În mod similar, HTTP utilizează coduri de statut pentru a informa clientul despre starea cererii sale, permițând un tratament corespunzător al diferitelor scenarii (de exemplu, reîncercarea unei cereri, gestionarea erorilor etc.).
+  * Exemplu Practic:
+    Să ne gândim la un scenariu simplu: un browser solicită o pagină web de la un server.
+    * Cerere HTTP: Browserul trimite o cerere HTTP (de exemplu, folosind metoda GET) către server pentru a solicita o pagină web. Aceasta este similară cu apelarea unei metode în OOP, unde metoda definește acțiunea de efectuat.
+    * Răspuns HTTP: Serverul răspunde cu un document HTML, împreună cu un cod de statut (de exemplu, 200 OK). Acesta este similar cu returnarea unui valorii de către o metodă în OOP, unde valorile returnate și tipurile de date sunt conforme cu definiția metodei.
 
-**20 Why should you ignore the `node_modules` folder in `.gitignore` ?**
+* **StateLessness:**
+  * Statelessness în HTTP: Fiecare cerere HTTP este tratată independent de celelalte. Serverul nu păstrează nicio informație despre starea clientului între cereri. Acest lucru este similar cu metodele stateless în OOP, unde starea unui obiect nu este afectată de apelurile metodei. De exemplu, în Java, o metodă statică poate fi considerată stateless dacă nu modifică sau depinde de starea instanței clasei.
+  * Implicații pentru Gestionarea Sesiunilor Web: Deoarece HTTP este fără stare, sesiunile web trebuie gestionate în moduri alternative. Aceasta este similară cu modul în care în OOP trebuie să gestionăm explicit starea când avem nevoie de ea. De exemplu, putem folosi variabile de instanță pentru a păstra starea unui obiect în Java. În mod similar, în web, sesiunile sunt gestionate folosind cookie-uri, parametri URL, sau alte mecanisme pentru a păstra starea peste cererile HTTP.
+  * Exemplu Practic:
+    Să luăm exemplul unui utilizator care face cumpărături într-un magazin online:
+    * Fără Stare (Statelessness): Când utilizatorul adaugă un produs în coșul de cumpărături și apoi navighează la o altă pagină, serverul nu își amintește că utilizatorul a adăugat acel produs, deoarece fiecare cerere HTTP este independentă. Acest lucru este similar cu apelarea unei metode stateless în Java, care nu păstrează nicio informație între apeluri.
+    * Gestionarea Stării: Pentru a păstra informații despre produsele adăugate în coș, magazinul online folosește **cookie-uri sau sesiuni**. Acestea permit serverului să "rețină" ce a făcut utilizatorul pe parcursul mai multor cereri HTTP. În OOP, acest lucru este similar cu utilizarea variabilelor de instanță pentru a menține starea unui obiect.
+
+**19. What is HTTP Formed By?**
+
+**I. Requests**
+* **Request Line:** Acesta este similar cu semnătura unei metode în Java. Așa cum o semnătură de metodă definește numele metodei, tipul de returnare și parametrii, linia de cerere HTTP specifică:
+  * **metoda** HTTP (GET, POST etc.), prin analogie cum ne referim la numele metodei.
+  * **URL-ul:** resursa solicitată, prin analogie este pe postul de parametru.
+  * **versiunea HTTP** (1.1, 2, 3) care joaca rolul tipului de returnare prin analogie cu o metoda.*
+
+
+* **Headers:** Furnizează informații suplimentare despre cererea clientului. Exemple de antete includ:
+  * **Content-Type:** Indică tipul de date al corpului cererii, de exemplu, application/json.
+  * **User-Agent:** Identifică clientul care face cererea.
+  * **Accept:** Specifică tipurile de conținut pe care clientul este dispus să le primească.
+  * **Authorization:** Folosit pentru autentificarea clientului.
+  
+
+* **Body:** Opțional în cereri, corpul conține datele care sunt trimise de catre client, către server. De exemplu:
+  * **GET:** tipic nu are un corp, deoarece scopul său este pur și simplu de a solicita date de la server (cum ar fi solicitarea unei pagini web), iar parametrii cererii sunt transmiși de obicei în URL (de exemplu, ca parte a șirului de interogare).
+  * **POST:** Utilizat pentru a trimite date pentru crearea unei noi resurse. Corpul ar putea include detaliile unui nou utilizator pentru a fi înregistrat.
+  * **PUT:** Folosit pentru a actualiza o resursă existentă. Corpul ar conține datele actualizate ale resursei.
+  * **PATCH:** Folosit pentru a actualiza partial o resursă existentă. Corpul ar conține datele actualizate ale resursei.
+  * **Depinde de Context:** Există situații unde chiar și cererile POST sau PUT pot să nu aibă un corp, cum ar fi când toate datele necesare sunt incluse în URL sau în antete.
+  * **Excepții și Exemple:** Deși tehnic este posibil ca o cerere GET să conțină un corp, acesta este un caz atipic și neobișnuit. Majoritatea serverelor și framework-urilor web ignoră corpul unei cereri GET și se bazează pe parametrii din URL pentru a procesa cererea. Nu există un standard clar în ceea ce privește procesarea corpului unei cereri GET, și de aceea este rar utilizat în practică.
+
+* **Exemple:**
+  * **Get Request:**
+    ```
+    GET /produse?categorie=carti HTTP/1.1
+    Host: www.exemplu.com
+    ```
+      * **Metoda HTTP:** GET
+      * **URL:** /produse?categorie=carti:
+        * /produse: Este calea către resursa pe care dorim să o accesăm pe server.
+        * ?categorie=carti: Aceasta este o parte de interogare (query string). Este utilizată pentru a furniza parametri suplimentari serverului. În acest caz, transmite că dorim să accesăm produsele filtrate dupa categoria "cărți".
+      * **Versiunea protocolului:** HTTP/1.1.
+      * **Header Request:** www.exemplu.com specifica cine este gazda (host)
+  * **Post Request:**
+  ```
+    POST /utilizatori HTTP/1.1
+    Host: www.exemplu.com
+    Content-Type: application/json
+    {
+       "nume": "Ion Popescu",
+       "email": "ion.popescu@example.com"
+    }
+  ```
+  * **Metoda HTTP:** POST
+  * **URL:** /utilizatori
+  * **Versiunea protocolului:** HTTP/1.1.
+  * **Header Request:** www.exemplu.com specifica cine este gazda (host)
+  * **Header Request:** Content-Type: application/json: Acest antet indică tipul de date al corpului cererii, în acest caz, JSON (JavaScript Object Notation).
+  * **Body Request:** { "nume": "Ion Popescu", "email": "ion.popescu@example.com" }: Acesta este corpul cererii, care conține datele trimise la server. În acest exemplu, datele sunt un obiect JSON cu două proprietăți: nume și email. Acestea reprezintă informațiile despre noul utilizator care trebuie creat.
+
+**II. Responses**
+* **Response Line:** Asemenea lui Request Line, Response line este comparabilă cu valoarea returnată de o metodă în Java, care include și un tip de date sau o valoare care indică rezultatul operației (de exemplu, un cod de eroare sau un mesaj de succes).
+  * **HTTP Status Code:** Număr care indică rezultatul cererii.
+  * **Reason Phrase:** O descriere text, lizibilă, a codului de stare, care explică rezultatul cererii.
+* **Headers:** Oferă informații suplimentare despre răspuns. Exemple de antete de răspuns includ:
+  * **Content-Type:** Tipul de date al corpului răspunsului.
+  * **Access-Control-Allow-Origin:** Specifică ce origini sunt permise să acceseze resursa.
+  * **User-Agent:** Informații despre browserul sau clientul care a făcut cererea.
+* **Body:** Opțional, conține conținutul solicitat, cum ar fi o pagină web, o imagine sau date JSON. În OOP, acest lucru poate fi comparat cu returnarea unui obiect sau a unei structuri de date complexe de către o metodă. Exemple cand are body:
+  * **Get cu body:** Un răspuns de succes (200 OK) pentru o pagină web va include, de obicei, HTML-ul paginii în Body Response.
+  * **Un răspuns pentru o cerere POST:** care creează o resursă ar putea include detalii despre resursa creată.
+  * **Un răspuns cu un cod de stare 204 No Content:** care este adesea folosit pentru a indica succesul unei cereri care nu produce conținut suplimentar, nu va avea un corp.
+  * **Răspunsuri Informaționale sau Erori:** Pentru anumite răspunsuri, cum ar fi cele informaționale (coduri de stare 1xx) sau unele erori client (4xx) și server (5xx), corpul poate să nu fie necesar sau relevant.
+
+**20. Cookies vs Sessions:**
+* **Cookies:**
+  * Cookie-urile sunt mici bucăți de date trimise de un server către browserul clientului și apoi trimise înapoi de client la fiecare cerere ulterioară către același server. Practic, acestea sunt folosite pentru a "aminti" serverului, informații despre utilizator.
+  * Cum Funcționează: Când vizitați un site web, serverul poate trimite un cookie către browserul dvs. Acest cookie este stocat pe computerul dvs. și trimis înapoi la server cu fiecare cerere HTTP ulterioară. De exemplu, un site de comerț electronic poate folosi cookie-uri pentru a păstra informații despre produsele adăugate în coșul de cumpărături.
+  * Caracteristici: Cookie-urile pot păstra diverse tipuri de date, de la preferințele utilizatorului până la datele de autentificare. Ele pot fi setate să expire după o anumită perioadă de timp.
+  * Capacitate: sunt fisiere mici de text cu o capacitate de pana la 4kb.
+  * Important: din cauza ca sunt stocate pe dispozitivul clientul nu sunt atat de sigure.
+
+* **Sessions:**
+  * Sesiunile sunt un alt mod de a păstra starea pe web. O sesiune creează un fișier unic pe server pentru fiecare utilizator care vizitează site-ul.
+  * Cum Funcționează: Când un utilizator accesează un site web, serverul creează o sesiune și păstrează un identificator unic al sesiunii, de obicei trimis către browser sub forma unui cookie. Acest identificator este utilizat pentru a reasocia cererea cu sesiunea corespunzătoare. De exemplu, într-un sistem de login, sesiunea poate păstra ID-ul utilizatorului și alte detalii de autentificare.
+  * Caracteristici: Ele sunt ideale pentru stocarea informațiilor sensibile și pot fi configurate să expire după o anumită perioadă de inactivitate. Cand se inchide browserul sau se face delogarea, se inchide si sesiunea.
+  * Capacitate: Sunt fisiere criptate cu o capacitate de stocare de pana la 128mb.
+  * Important: Sesiunile sunt păstrate pe server, ceea ce le face, în general, mai sigure decât cookie-urile stocate pe client.
+
+**21. What kind of HTTP status codes do you know?**
+
+* [x] **Informational responses (100 – 199):**
+  * **100 Continue:** Îndeamnă clientul să continue cu trimiterea corpului cererii (utilizat în cazul cererilor care au un corp mare).
+  * **101 Switching Protocols:** Serverul înțelege și este pregătit să schimbe la protocolul clientului, de exemplu, la WebSockets.
+* [x] **Successful responses (200 – 299):**
+  * **200 OK:** Răspunsul standard pentru cererile reușite.
+  * **201 Created:** Indică că o nouă resursă a fost creată ca rezultat al cererii.
+* [x] **Redirection messages (300 – 399):**
+  * **301 Moved Permanently:** Resursa solicitată s-a mutat permanent la o nouă adresă URL. Clientul ar trebui să refacă cererea la noua adresă. 
+  * **302 Found (sau 302 Redirect):** Resursa solicitată se află temporar sub o altă adresă URL. Clientul poate continua să folosească adresa URL originală, deoarece redirecționarea este temporară. 
+  * **304 Not Modified:** Utilizat pentru cache. Indică că resursa nu a fost modificată de la ultima solicitare și clientul poate folosi versiunea stocată în cache.
+* [x] **Client error responses (400 – 499):**
+  * **400 Bad Request:** Cererea nu a putut fi procesată din cauza unei erori de client (de exemplu, formatul cererii este greșit). 
+  * **401 Unauthorized:** Cererea necesită autentificare. Acest cod este trimis când o cerere necesită autentificare și aceasta lipsește sau este invalidă. 
+  * **404 Not Found:** Serverul nu a putut găsi resursa solicitată.
+* [x] **Server error responses (500 – 599):**
+  * **500 Internal Server Error:** O eroare generică, indicând că serverul a întâmpinat o situație pe care nu știe cum să o gestioneze. 
+  * **503 Service Unavailable:** Serverul nu este disponibil temporar, de obicei din cauza suprasolicitării sau întreținerii.
+
+**22. HTTP methods:**
+
+**a. GET**
+* Utilizare: Solicită o reprezentare a unei resurse specifice. Cererile folosind metoda GET ar trebui să fie doar pentru recuperare de date și nu ar trebui să afecteze starea resursei. 
+* Exemplu: Accesarea unei pagini web sau a unei imagini.
+
+**b. POST**
+* Utilizare: Trimite date către server pentru a crea o nouă resursă. Datele sunt incluse în corpul cererii. Este folosită adesea pentru trimiterea de formulare web.
+* Exemplu: Înscrierea unui utilizator nou, postarea unui comentariu pe un blog.
+
+**c. PUT**
+* Utilizare: Înlocuiește toate reprezentările curente ale resursei țintă cu datele încărcate.
+* Exemplu: Actualizarea detaliilor unui utilizator.
+
+**d. PATCH**
+* Utilizare: Aplică modificări parțiale la o resursă. Spre deosebire de PUT, PATCH este folosit pentru actualizări parțiale.
+* Exemplu: Actualizarea adresei de email a unui utilizator, fără a modifica alte informații.
+
+**e. DELETE**
+* Utilizare: Șterge o resursă specificată.
+* Exemplu: Ștergerea unui articol de pe un blog.
+
+**f. HEAD**
+* Utilizare Detaliată: Metoda HEAD este folosită pentru a solicita anteturile care ar fi returnate dacă resursa specificată ar fi solicitată cu o cerere GET. Această metodă nu returnează un corp de răspuns, ceea ce o face utilă pentru obținerea metadatelor despre o resursă fără a descărca întreaga resursă.
+* Exemplu Practic: Să presupunem că vrei să verifici dacă o imagine mare sau un document PDF există pe un server web și să afli dimensiunea acestuia fără a-l descărca. Ai putea trimite o cerere HEAD către URL-ul resursei. Răspunsul va include metadate precum Content-Type și Content-Length, permițându-ți să decizi dacă să descarci sau nu resursa completă.
+
+**g. OPTIONS**
+* Utilizare Detaliată: Metoda OPTIONS este utilizată pentru a afla ce metode HTTP sunt permise pentru o resursă specifică. Acest lucru este util pentru explorarea capabilităților serverului sau pentru verificarea permisiunilor pe o resursă.
+* Exemplu Practic: Înainte de a face o cerere POST pentru a încărca date pe un server, un client ar putea trimite o cerere OPTIONS la același URL pentru a verifica dacă metoda POST este acceptată. Răspunsul va include un antet Allow care enumeră toate metodele HTTP permise pentru acea resursă.
+
+**h. CONNECT**
+* Utilizare Detaliată: Metoda CONNECT este utilizată pentru a deschide un tunel prin intermediul unui server proxy. De obicei, este folosită pentru a stabili o conexiune securizată prin un proxy HTTP.
+* Exemplu Practic: Când un client HTTPS dorește să se conecteze la un site securizat prin intermediul unui proxy, acesta trimite o cerere CONNECT către proxy. Proxy-ul, la rândul său, stabilește o conexiune cu serverul țintă și, odată ce conexiunea este stabilită, traficul între client și serverul țintă trece prin proxy.
+
+**i. TRACE**
+* Utilizare Detaliată: Metoda TRACE este folosită pentru diagnosticarea conținutului cererilor HTTP în cadrul rețelei. Aceasta efectuează un apel de tip "loopback" al cererii primite, permițând clientului să vadă ce modificări sau adăugiri sunt făcute de servere sau proxy-uri.
+* Exemplu Practic: Dacă suspectați că un server proxy modifică cererile în tranzit, puteți trimite o cerere TRACE către serverul țintă. Răspunsul va include exact corpul cererii așa cum a fost primit de serverul țintă, permitându-vă să vedeți ce, dacă ceva, a fost modificat de proxy.
+
+**24. Metadatele:**
+
+  **Tipuri de Metadate:**
+* **Descriptive:** Ajută la identificarea, descoperirea și localizarea unei anumite resurse. Exemple includ titlul unui document, autorul, rezumatul și cuvintele cheie. 
+* **Structural:** Acestea descriu cum sunt organizate datele. De exemplu, cum sunt organizate capitolele și secțiunile într-un document sau cum sunt structurate tabelele și coloanele într-o bază de date. 
+* **Administrative:** Aceste metadate sunt legate de managementul și administrarea resurselor, cum ar fi drepturile de autor, restricțiile de acces și informațiile de versionare.
+
+
+  **Exemple de Metadate:**
+* **În Fotografii Digitale:** Informațiile EXIF dintr-o fotografie digitală sunt metadate. Ele pot include data și ora când a fost făcută fotografia, tipul aparatului foto, setările de expunere și chiar coordonatele GPS ale locației unde a fost făcută fotografia. 
+* **În Documente:** Un document Word poate avea metadate care includ autorul, data ultimei modificări, numărul de cuvinte și alte detalii despre document. 
+* **Pe Web:** În HTML, etichetele <meta> din secțiunea <head> a unei pagini web sunt metadate. Acestea pot oferi descrieri, cuvinte cheie sau informații despre autor, care ajută motoarele de căutare să înțeleagă și să clasifice conținutul paginii. 
+* **În Baze de Date:** Metadatele pot include schemele de tabel, tipurile de date ale coloanelor, constrângeri, relații între tabele și alte informații structurale. 
+* **În Software și Aplicații:** Versiunea unui software, dependențele sale, autorul și licența sunt toate forme de metadate.
+
+
+  **Importanța Metadatelor:**
+
+* Metadatele sunt esențiale pentru gestionarea, organizarea și găsirea eficientă a informațiilor în lumea digitală. Ele permit utilizatorilor și sistemelor informatice să înțeleagă contextul și conținutul datelor fără a fi necesar să acceseze datele în sine. În plus, sunt cruciale pentru securitate, conformitate și arhivare în multe domenii, inclusiv în managementul documentelor, biblioteci digitale și arhive.
+
+
+
+**23. Why should you ignore the `node_modules` folder in `.gitignore` ?**
 
 * It is better to put the `node_modules` folder in the `.gitignore` file because it gets too much space from the Git repository (the folder has a large size). It is enough to have them in the "package.json" so that you can use npm install and get them again when you need them. Also, it is better for the security of the project to include the "node_modules" in the ".gitignore" file.
 
