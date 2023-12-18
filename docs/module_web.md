@@ -224,14 +224,20 @@ si de altfel dicteaza ce actiuni ar trebui sa intreprinda web serverele si brows
   * **Body Request:** { "nume": "Ion Popescu", "email": "ion.popescu@example.com" }: Acesta este corpul cererii, care conține datele trimise la server. În acest exemplu, datele sunt un obiect JSON cu două proprietăți: nume și email. Acestea reprezintă informațiile despre noul utilizator care trebuie creat.
 
 **II. Responses**
-* **Response Line:** Asemenea lui Request Line, Response line este comparabilă cu valoarea returnată de o metodă în Java, care include și un tip de date sau o valoare care indică rezultatul operației (de exemplu, un cod de eroare sau un mesaj de succes).
-  * **HTTP Status Code:** Număr care indică rezultatul cererii.
-  * **Reason Phrase:** O descriere text, lizibilă, a codului de stare, care explică rezultatul cererii.
+* **Response Line:** HTTP/1.1 200 OK sau HTTP/1.1 404 Not Found.
+  * **Versiunea protocolului HTTP:** 1.1
+  * **HTTP Status Code:** 200 sau 404 - Număr care indică rezultatul cererii.
+  * **Reason Phrase:** OK sau Not Found - O descriere text, lizibilă, a codului de stare, care explică rezultatul cererii.
 * **Headers:** Oferă informații suplimentare despre răspuns. Exemple de antete de răspuns includ:
   * **Content-Type:** Tipul de date al corpului răspunsului.
+  * **Content-Length:** lungimea corpului răspunsului în octeți
   * **Access-Control-Allow-Origin:** Specifică ce origini sunt permise să acceseze resursa.
   * **User-Agent:** Informații despre browserul sau clientul care a făcut cererea.
-* **Body:** Opțional, conține conținutul solicitat, cum ar fi o pagină web, o imagine sau date JSON. În OOP, acest lucru poate fi comparat cu returnarea unui obiect sau a unei structuri de date complexe de către o metodă. Exemple cand are body:
+* **Empty Line:** O linie goală urmează după anteturile răspunsului, indicând sfârșitul secțiunii de anteturi și începutul corpului răspunsului.
+* **Body:** Opțional, conține conținutul solicitat, cum ar fi o pagină web, o imagine sau date JSON. În OOP, acest lucru poate fi comparat cu returnarea unui obiect sau a unei structuri de date complexe de către o metodă.
+
+
+* **Exemple cand are body:**
   * **Get cu body:** Un răspuns de succes (200 OK) pentru o pagină web va include, de obicei, HTML-ul paginii în Body Response.
   * **Un răspuns pentru o cerere POST:** care creează o resursă ar putea include detalii despre resursa creată.
   * **Un răspuns cu un cod de stare 204 No Content:** care este adesea folosit pentru a indica succesul unei cereri care nu produce conținut suplimentar, nu va avea un corp.
@@ -272,7 +278,18 @@ si de altfel dicteaza ce actiuni ar trebui sa intreprinda web serverele si brows
   * **500 Internal Server Error:** O eroare generică, indicând că serverul a întâmpinat o situație pe care nu știe cum să o gestioneze. 
   * **503 Service Unavailable:** Serverul nu este disponibil temporar, de obicei din cauza suprasolicitării sau întreținerii.
 
-**22. HTTP methods:**
+**22. Elementele esențiale ale unei cereri HTTP sunt următoarele:**
+
+* **Metoda HTTP:** Specifică tipul acțiunii solicitate pe server. Cele mai comune metode sunt GET (pentru a solicita date), POST (pentru a trimite date), PUT (pentru a actualiza date), DELETE (pentru a șterge date), și altele.
+* **URL (Uniform Resource Locator):** Adresa resursei la care se face cererea. Include protocolul (de exemplu, http sau https), numele gazdei (host), calea resursei și, opțional, parametrii de interogare.
+* **Path:** Partea specifică din URL care indică resursa dorită pe server. De exemplu, în https://example.com/api/users, calea este /api/users.
+* **Query Parameters:** O parte opțională a URL-ului, folosită pentru a furniza informații suplimentare serverului. Acești parametri sunt atașați la sfârșitul URL-ului și sunt precedați de un semn întrebare (?). De exemplu, ?id=123.
+* **Headers:** Fournizează informații suplimentare despre cerere, cum ar fi tipul de conținut (Content-Type), autentificarea (Authorization), și alte metadate. Ele sunt esențiale pentru configurarea corectă a cererilor și răspunsurilor HTTP.
+* **Body:** Partea care conține datele efective trimise sau primite în cerere. Corpul este folosit în metodele POST și PUT pentru a trimite datele necesare serverului. În cererile GET, de obicei, nu există un corp.
+* **Versiunea Protocolului HTTP:** Indică versiunea protocolului HTTP folosită pentru cerere, de exemplu, HTTP/1.1 sau HTTP/2.
+
+
+**23. HTTP methods:**
 
 **a. GET**
 * Utilizare: Solicită o reprezentare a unei resurse specifice. Cererile folosind metoda GET ar trebui să fie doar pentru recuperare de date și nu ar trebui să afecteze starea resursei. 
@@ -330,16 +347,118 @@ si de altfel dicteaza ce actiuni ar trebui sa intreprinda web serverele si brows
 
 * Metadatele sunt esențiale pentru gestionarea, organizarea și găsirea eficientă a informațiilor în lumea digitală. Ele permit utilizatorilor și sistemelor informatice să înțeleagă contextul și conținutul datelor fără a fi necesar să acceseze datele în sine. În plus, sunt cruciale pentru securitate, conformitate și arhivare în multe domenii, inclusiv în managementul documentelor, biblioteci digitale și arhive.
 
+**25. HTML Behaviour:**
+* **Form submit:**
 
+```
+<from action="/submit-form" method="post">
+  <input type="text" name="username">
+  <input type="password" name="password">
+  <input type="submit" value="Submit">
+</form>
+```
 
-**23. Why should you ignore the `node_modules` folder in `.gitignore` ?**
+* Când utilizatorul apasă pe butonul de submit, formularul trimite datele (în acest caz, username și password) către server la URL-ul specificat în atributul action folosind metoda HTTP specificată (în acest caz, post). Browserul va naviga automat către noua adresă, care poate conduce la reîncărcarea paginii sau la navigarea către o nouă pagină.
+
+* **preventDefault:**
+
+  * **Oprirea Comportamentului Implicit:** Prin apelarea preventDefault() într-un handler de evenimente, aceste acțiuni implicite sunt anulate.
+  * **Nu Oprirea Propagării Evenimentului:** Este important de remarcat că preventDefault() nu oprește propagarea evenimentului. Adică, evenimentul continuă să se propage în arborele DOM. Pentru a opri propagarea, trebuie să folosiți stopPropagation() sau stopImmediatePropagation().
+  * **Concluzie:** preventDefault este o modalitate puternică în JavaScript de a controla și personaliza comportamentul implicit al elementelor HTML, oferind dezvoltatorilor flexibilitatea de a implementa comportamente personalizate, cum ar fi validarea formularului pe partea clientului, trimiterea datelor prin AJAX și multe altele.
+
+**26. Cum Funcționează AJAX?**
+
+* Un Eveniment pe Pagina Web: O acțiune realizată de utilizator (cum ar fi apăsarea unui buton) declanșează o cerere AJAX.
+* JavaScript Creează Cererea: JavaScript-ul folosește obiectul XMLHttpRequest (sau în cazuri moderne, API-ul fetch) pentru a crea o cerere către server.
+* Trimiterea Cererii: Cererea este trimisă către server asincron. Pagina web nu se reîncarcă în timpul acestui proces.
+* Procesarea Cererii de către Server: Serverul procesează cererea și trimite înapoi un răspuns.
+* Răspunsul Serverului: Răspunsul este primit de JavaScript, care apoi poate actualiza dinamic conținutul paginii web fără a necesita o reîncărcare completă.
+* Actualizare Pagină Web: Pagina web este actualizată cu noile date. Aceasta poate include actualizarea elementelor HTML, afișarea unor noi informații, modificarea stilurilor etc.
+
+**Exemplu de Utilizare AJAX:**
+
+* Să presupunem că ai un formular pe pagina ta web pentru a căuta informații despre un utilizator. În loc să trimiți formularul în mod tradițional și să reîncarci pagina, folosești AJAX pentru a trimite cererea.
+* În acest exemplu, informațiile despre utilizator sunt cerute asincron și pagina este actualizată cu aceste informații fără a fi nevoie de reîncărcarea paginii.
+
+**Concluzie**
+
+* AJAX a revoluționat dezvoltarea web, permițând dezvoltatorilor să creeze experiențe de utilizator mai bogate și mai interactive. Este un instrument fundamental în multe aplicații web moderne, contribuind la fluiditatea și rapiditatea interfețelor utilizator.
+
+**27. Why should you ignore the `node_modules` folder in `.gitignore` ?**
 
 * It is better to put the `node_modules` folder in the `.gitignore` file because it gets too much space from the Git repository (the folder has a large size). It is enough to have them in the "package.json" so that you can use npm install and get them again when you need them. Also, it is better for the security of the project to include the "node_modules" in the ".gitignore" file.
 
-
 ### Rest API: Serve and Fetch
 
-**21 Why is it recommend for a developer to use the http methods `get`, `put`, `delete`?**
+**28. Ce este un fetch?**
+
+* API-ul fetch este o interfață modernă în JavaScript care permite efectuarea cererilor HTTP asincrone. Este un mod de a cere resurse de pe rețea, cum ar fi documente HTML, fișiere JSON, imagini etc. Este considerat un înlocuitor mai puternic și mai flexibil pentru XMLHttpRequest, oferind o sintaxă mai simplă și bazată pe promisiuni.
+
+**29. Cum Funcționează API-ul Fetch?**
+
+* **Cereri Asincrone:** fetch permite efectuarea cererilor asincrone în rețea. Aceasta înseamnă că poți trimite o cerere pentru a aduce date de la un server și procesa răspunsul fără a bloca restul codului tău sau a reîncărca pagina. 
+* **Promisiuni:** API-ul fetch utilizează promisiuni, ceea ce înseamnă că gestionează operațiuni asincrone mai eficient. O promisiune este un obiect care reprezintă finalizarea sau eșecul unei operațiuni asincrone și valoarea ei rezultată.
+
+**30. Exemplu de Cerere Fetch:**
+
+* Să presupunem că vrei să obții date JSON de la un server:
+
+```
+fetch('https://example.com/data', options)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.error('There has been a problem with your fetch operation:', error);
+  });
+```
+* **Initializarea cererii:**
+  * **Apelul Fetch:** Se face o cerere fetch către https://example.com/data. 
+  * **"options":** Poți de asemenea să specifici opțiuni suplimentare, cum ar fi metoda HTTP (GET, POST etc.), anteturile, corpul cererii și altele. Un obiect opțional care specifică diferite setări pentru cerere, cum ar fi metoda, anteturile, corpul etc.
+* **Procesarea Răspunsului:**
+  * **Promisiuni:** fetch returneaza o promisiune. Promisiunile sunt folosite pentru a gestiona operațiuni asincrone. O promisiune are trei stări: pending (în așteptare), fulfilled (îndeplinită) și rejected (respinsă).
+  * **Gestionarea Răspunsului:** După ce cererea este trimisă, următorul pas este să procesezi răspunsul. Folosești .then() pentru a specifica ce să faci odată ce promisiunea este îndeplinită (adică când răspunsul este primit de la server).
+  * **Verificarea Stării Răspunsului:** Verifici dacă răspunsul este OK (de exemplu, codul de stare HTTP este 200). Dacă nu, poți arunca o eroare pentru a intra în blocul .catch() pentru gestionarea erorilor.
+  * **Conversia Răspunsului:** De obicei, convertim răspunsul în formatul adecvat, cum ar fi JSON, folosind response.json(). Alte metode includ response.text(), response.blob() etc., în funcție de tipul de date pe care îl aștepți.
+* **Utilizarea Datelor Răspunsului:**
+  * **Al Doilea .then():** După ce răspunsul este convertit (de exemplu, în JSON), poți folosi un alt .then() pentru a lucra cu acele date. Datele JSON sunt apoi afișate în consolă. 
+* **Gestionarea Erorilor:**
+  * **Blocul .catch():** La sfârșit, adaugi un .catch() pentru a prinde orice eroare care ar putea apărea în timpul cererii sau procesării datelor. Orice eroare în cerere sau în procesarea răspunsului este prinsă și afișată în consolă.
+
+```
+fetch('https://example.com/data', { method: 'GET' })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.error('Fetch error:', error);
+  });
+```
+* **Concluzie:**
+  * Procesul fetch implică trimiterea cererii GET la URL-ul 'https://example.com/data'
+  * procesarea răspunsului asincron
+  * folosirea datelor primite
+  * gestionarea erorilor.
+  * Este o abordare modernă și puternică pentru lucrul cu cereri și răspunsuri HTTP în JavaScript, oferind o modalitate elegantă și eficientă de a interacționa cu servere și servicii web.
+
+**31. FETCH vs XMLHttpRequest:**
+
+* 
+
+
+**21 Why is it recommended for a developer to use the http methods `get`, `put`, `delete`?**
 
 * HTTP methods are secure and efficient ways to work with data on a server.
 * We use the `GET` method to retrieve data.
@@ -622,6 +741,17 @@ test('objects are equal', () => {
 ```
 
 ### React basics
+
+**46. React Fragments:**
+
+* **Definition:** React Fragments sunt o caracteristică utilă în biblioteca React, care permite gruparea mai multor elemente JSX fără a adăuga noduri suplimentare în DOM (Document Object Model).
+* **Sintaxă:** Există două moduri principale de a utiliza Fragments:
+  * Sintaxa scurtă: <>...</>, care este cea mai simplă și mai curată formă.
+  * Sintaxa extinsă: <React.Fragment>...</React.Fragment>, care este utilă atunci când este nevoie să adăugați atribute, cum ar fi key în cazul listelor.
+* **Avantaje:**
+  * Performanță: Reducerea numărului de noduri din DOM poate îmbunătăți performanța, deoarece fiecare nod suplimentar poate adăuga complexitate și poate încetini procesarea DOM.
+  * Curățenie în Cod: Utilizarea Fragments ajută la menținerea unui cod mai curat și mai lizibil, evitându-se îngrămădirea cu <div>-uri inutile.
+  * Menținerea Structurii CSS: Uneori, adăugarea unor elemente <div> suplimentare poate perturba structura și stilul CSS existent. Fragments elimină această problemă.
 
 **46 What benefits does it bring for a developer to use `components` (opposed of writing all the code in a single file)?**
 
