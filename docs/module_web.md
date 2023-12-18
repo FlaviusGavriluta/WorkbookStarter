@@ -901,6 +901,18 @@ test('myFunction is called at least 2 times', () => {
 
 ### React patterns
 
+**59. DOM Manipulation:**
+* **Selectarea Elementelor:** Pentru a manipula elemente în DOM, mai întâi trebuie să le selectezi. Acest lucru se face folosind metode precum document.getElementById(), document.getElementsByClassName(), document.getElementsByTagName() și document.querySelector(). 
+* **Modificarea Elementelor:** După ce ai selectat un element, poți modifica textul său, HTML-ul intern, atributele și stilurile. De exemplu, element.textContent sau element.innerHTML pentru a schimba textul sau HTML-ul, element.setAttribute() pentru a schimba atributele, și element.style pentru a modifica stilurile CSS. 
+* **Adăugarea și Ștergerea Elementelor:** Poți crea noi elemente în DOM folosind document.createElement(), le poți adăuga în document cu element.appendChild() sau element.insertBefore(), și le poți șterge cu element.removeChild(). 
+* **Ascultarea Evenimentelor:** Manipularea DOM este adesea asociată cu evenimentele JavaScript, cum ar fi clicurile mouse-ului sau apăsările de tastă. Poți adăuga gestionari de evenimente la elemente folosind element.addEventListener().
+
+**60. Importanța DOM în Dezvoltarea Web:**
+* **Interactivitatea Paginii Web:** Manipularea DOM este esențială pentru a face paginile web interactive. De exemplu, actualizarea conținutului paginii în răspuns la acțiunile utilizatorului.
+* **SPA (Single Page Applications):** În aplicațiile web moderne, cum ar fi cele construite cu React sau Angular, manipularea DOM este gestionată de framework-uri/biblioteci, facilitând crearea de SPA-uri dinamice și responsive.
+
+
+
 **59 What is the difference between Real DOM and Virtual DOM?**
 
 | **Differences** |                       **Real DOM**                       |                      **Virtual DOM**                      |
